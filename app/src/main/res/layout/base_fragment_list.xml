@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/header"
+            android:id="@+id/viewA"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
@@ -18,7 +18,7 @@
             android:orientation="horizontal"/>
 
         <LinearLayout
-            android:id="@+id/body"
+            android:id="@+id/viewB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
@@ -26,9 +26,9 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_items"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/base_list">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -37,22 +37,21 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_scan"
+        android:id="@+id/fab"
         android:layout_width="1000dp"
         android:layout_height="50dp"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:layout_anchor="@id/header"
+        app:layout_anchor="@id/viewA"
         android:src="@drawable/scan_icn"
         app:layout_anchorGravity="bottom|right|end"/>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="100dp"
-        android:id="@+id/btn_submit"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        app:layout_anchor="@id/body"
+        app:layout_anchor="@id/viewB"
         app:fabSize="normal"
         app:borderWidth="0dp"
         app:elevation="2dp"

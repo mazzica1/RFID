@@ -24,101 +24,101 @@ import nt.esraakhaled.com.rfid.R;
  */
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
-  ArrayList<HomeItem> homeItems;
-  Context mContext;
-  OnItemClickListener mItemClickListener;
+    ArrayList<HomeItem> homeItems;
+    Context mContext;
+    OnItemClickListener mItemClickListener;
 
-  public HomeListAdapter(Context context) {
-    this.mContext = context;
-    homeItems=new ArrayList<>();
+    public HomeListAdapter(Context context) {
+        this.mContext = context;
+        homeItems = new ArrayList<>();
 
-    HomeItem inventory=new HomeItem();
-    inventory.name="Inventory";
-    inventory.imageName="inventory";
+        HomeItem inventory = new HomeItem();
+        inventory.name = "Inventory";
+        inventory.imageName = "inventory";
 
-    homeItems.add(inventory);
-
-
-    HomeItem locator=new HomeItem();
-    locator.name="Locator";
-    locator.imageName="locator";
-
-    homeItems.add(locator);
+        homeItems.add(inventory);
 
 
-    HomeItem expired=new HomeItem();
-    expired.name="Expired";
-    expired.imageName="expired";
+        HomeItem locator = new HomeItem();
+        locator.name = "Locator";
+        locator.imageName = "locator";
 
-    homeItems.add(expired);
-
-
-    HomeItem logOut=new HomeItem();
-    logOut.name="Log Out";
-    logOut.imageName="logout";
-
-    homeItems.add(logOut);
+        homeItems.add(locator);
 
 
-  }
+        HomeItem expired = new HomeItem();
+        expired.name = "Expired";
+        expired.imageName = "expired";
 
-  @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home, parent, false);
-    return new ViewHolder(view);
-  }
+        homeItems.add(expired);
 
-  @Override
-  public void onBindViewHolder(final ViewHolder holder, final int position) {
-    final HomeItem homeItem = homeItems.get(position);
 
-    holder.Name.setText(homeItem.name);
-    Picasso.with(mContext).load(homeItem.getImageResourceId(mContext)).into(holder.Image);
+        HomeItem logOut = new HomeItem();
+        logOut.name = "Log Out";
+        logOut.imageName = "logout";
 
-    Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), homeItem.getImageResourceId(mContext));
+        homeItems.add(logOut);
 
-    Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
-      public void onGenerated(Palette palette) {
-        int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
-        holder.NameHolder.setBackgroundColor(mutedLight);
-      }
-    });
-  }
 
-  @Override
-  public int getItemCount() {
-    return homeItems.size();
-  }
-
-  public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public LinearLayout Holder;
-    public LinearLayout NameHolder;
-    public TextView Name;
-    public ImageView Image;
-
-    public ViewHolder(View itemView) {
-      super(itemView);
-      Holder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
-      Name = (TextView) itemView.findViewById(R.id.Name);
-      NameHolder = (LinearLayout) itemView.findViewById(R.id.NameHolder);
-      Image = (ImageView) itemView.findViewById(R.id.Image);
-      Holder.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-      if (mItemClickListener != null) {
-        mItemClickListener.onItemClick(itemView, getPosition());
-      }
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home, parent, false);
+        return new ViewHolder(view);
     }
-  }
 
-  public interface OnItemClickListener {
-    void onItemClick(View view, int position);
-  }
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final HomeItem homeItem = homeItems.get(position);
 
-  public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
-    this.mItemClickListener = mItemClickListener;
-  }
+        holder.Name.setText(homeItem.name);
+        Picasso.with(mContext).load(homeItem.getImageResourceId(mContext)).into(holder.Image);
+
+        Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), homeItem.getImageResourceId(mContext));
+
+        Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
+            public void onGenerated(Palette palette) {
+                int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
+                holder.NameHolder.setBackgroundColor(mutedLight);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return homeItems.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public LinearLayout Holder;
+        public LinearLayout NameHolder;
+        public TextView Name;
+        public ImageView Image;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            Holder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
+            Name = (TextView) itemView.findViewById(R.id.Name);
+            NameHolder = (LinearLayout) itemView.findViewById(R.id.NameHolder);
+            Image = (ImageView) itemView.findViewById(R.id.Image);
+            Holder.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(itemView, getPosition());
+            }
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
 
 }

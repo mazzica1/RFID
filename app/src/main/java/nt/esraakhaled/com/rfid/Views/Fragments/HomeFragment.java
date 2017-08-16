@@ -56,7 +56,8 @@ public class HomeFragment extends Fragment {
     HomeListAdapter.OnItemClickListener onItemClickListener = new HomeListAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-
+            LocatorFragment fragment =new LocatorFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
         }
     };
 
