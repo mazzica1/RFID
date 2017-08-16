@@ -41,7 +41,7 @@ public class ExpireDateFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.base_fragment_list, container, false);
 
-        Linear_base_header = (LinearLayout) view.findViewById(R.id.header);
+        Linear_base_header = (LinearLayout) view.findViewById(R.id.headerLayout);
 
 
         return view;
