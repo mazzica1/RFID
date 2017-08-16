@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import nt.esraakhaled.com.rfid.Controllers.Adapters.BaseAdapter;
+import nt.esraakhaled.com.rfid.Models.BaseAdapterItem;
 import nt.esraakhaled.com.rfid.R;
 
 /**
@@ -25,7 +26,7 @@ public class LocatorFragment extends Fragment {
 
     EditText tagEditText;
     Button addToList;
-    ArrayList<String> tags;
+    ArrayList<BaseAdapterItem> tags;
     BaseAdapter adapter;
 
     RecyclerView recyclerView;
@@ -65,7 +66,7 @@ public class LocatorFragment extends Fragment {
                 if (tagEditText.getText().toString().isEmpty()) {
                     tagEditText.setError("Tag can't be empty!");
                 } else {
-                    tags.add(tagEditText.getText().toString());
+                    tags.add(new BaseAdapterItem(){{setTitle(tagEditText.getText().toString());}});
 
                     adapter.notifyItemInserted(tags.size()-1);
 
