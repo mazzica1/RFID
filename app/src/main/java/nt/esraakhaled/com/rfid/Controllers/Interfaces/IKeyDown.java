@@ -1,4 +1,4 @@
-package nt.esraakhaled.com.rfid.Interfaces;
+package nt.esraakhaled.com.rfid.Controllers.Interfaces;
 
 /**
  * Created by OSX on 8/15/17.

@@ -1,4 +1,4 @@
-package nt.esraakhaled.com.rfid.Fragments;
+package nt.esraakhaled.com.rfid.Views.Fragments;
 
 
 import android.os.Bundle;
@@ -24,7 +24,14 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View v= inflater.inflate(R.layout.fragment_login, container, false);
+        v.findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+            }
+        });
+        return  v;
     }
 
 }
