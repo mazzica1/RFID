@@ -1,16 +1,14 @@
 package nt.esraakhaled.com.rfid.Views.Activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
-
+import nt.esraakhaled.com.rfid.Controllers.Interfaces.IKeyDown;
 import nt.esraakhaled.com.rfid.Controllers.Sensors.UHFReader;
 import nt.esraakhaled.com.rfid.R;
 import nt.esraakhaled.com.rfid.Views.Fragments.LoginFragment;
-import nt.esraakhaled.com.rfid.Controllers.Interfaces.IKeyDown;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (keyCode == 139) {
             if (event.getRepeatCount() == 0) {
+                UHFReader.getInstange(this).toogleReading();
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if (f != null && f instanceof IKeyDown) {
                     ((IKeyDown)f).myOnKeyDwon();
