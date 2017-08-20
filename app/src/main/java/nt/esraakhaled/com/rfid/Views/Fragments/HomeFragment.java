@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
@@ -49,7 +49,13 @@ public class HomeFragment extends Fragment {
     HomeListAdapter.OnItemClickListener onItemClickListener = new HomeListAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-            if (position == 2) {
+            if (position == 0) {
+                Fragment fragment = new InventoryFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            } else if (position == 1) {
+                Fragment fragment = new LocatorFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            } else if (position == 2) {
                 Fragment fragment = new ExpireDateFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             }
