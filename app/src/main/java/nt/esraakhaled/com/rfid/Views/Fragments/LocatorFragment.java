@@ -1,6 +1,8 @@
 package nt.esraakhaled.com.rfid.Views.Fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,13 +18,14 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import nt.esraakhaled.com.rfid.Controllers.Adapters.BaseAdapter;
+import nt.esraakhaled.com.rfid.Controllers.Interfaces.UHFReaderDelegate;
 import nt.esraakhaled.com.rfid.Models.BaseAdapterItem;
 import nt.esraakhaled.com.rfid.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LocatorFragment extends Fragment {
+public class LocatorFragment extends Fragment implements UHFReaderDelegate {
 
     EditText tagEditText;
     Button addToList;
@@ -39,8 +42,8 @@ public class LocatorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        tags=new ArrayList<>();
-        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.Single,tags);
+        tags = new ArrayList<>();
+        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.Single, tags);
         return inflater.inflate(R.layout.base_fragment_list, container, false);
     }
 
@@ -66,13 +69,46 @@ public class LocatorFragment extends Fragment {
                 if (tagEditText.getText().toString().isEmpty()) {
                     tagEditText.setError("Tag can't be empty!");
                 } else {
-                    tags.add(new BaseAdapterItem(){{setTitle(tagEditText.getText().toString());}});
+                    boolean alreadyExsists = false;
+                    for (int i = 0; i < tags.size(); i++) {
+                        if (tagEditText.getText().toString() == tags.get(i).getTitle()) {
+                            alreadyExsists = true;
+                        }
+                    }
+                    if (alreadyExsists) {
+                        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Tag Already Exists!")
+                                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).show();
 
-                    adapter.notifyItemInserted(tags.size()-1);
+                    } else {
+                        tags.add(new BaseAdapterItem() {{setTitle(tagEditText.getText().toString());}});
 
-                    tagEditText.setText("");
+                        adapter.notifyItemInserted(tags.size() - 1);
+
+                        tagEditText.setText("");
+                    }
                 }
             }
         });
+    }
+
+    @Override
+    public void tagEPCRead(String epc) {
+        for (int i = 0; i < tags.size(); i++) {
+            if (epc == tags.get(i).getTitle()) {
+                tags.get(i).setFlag(true);
+                adapter.notifyItemChanged(i);
+            }
+        }
+    }
+
+    @Override
+    public void tagEPCDataRead(String data) {
+
     }
 }

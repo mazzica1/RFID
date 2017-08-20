@@ -6,6 +6,7 @@ package nt.esraakhaled.com.rfid.Models;
 
 public class BaseAdapterItem {
     String title,subTitle;
+    boolean flag;
 
     public String getTitle() {
         return title;
@@ -21,5 +22,13 @@ public class BaseAdapterItem {
 
     public void setSubTitle(String subTitle) {
         this.subTitle = subTitle;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }
