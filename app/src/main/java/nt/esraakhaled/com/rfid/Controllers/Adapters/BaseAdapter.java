@@ -95,6 +95,7 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseHolder> im
             holder.subTitleText.setText(items.get(position).getSubTitle());
         }
         holder.itemView.setTag(position);
+
     }
 
     @Override
