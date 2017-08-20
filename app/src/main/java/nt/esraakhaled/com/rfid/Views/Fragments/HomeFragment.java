@@ -1,6 +1,7 @@
 package nt.esraakhaled.com.rfid.Views.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -49,15 +50,23 @@ public class HomeFragment extends Fragment {
     HomeListAdapter.OnItemClickListener onItemClickListener = new HomeListAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-            if (position == 0) {
-                Fragment fragment = new InventoryFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-            } else if (position == 1) {
-                Fragment fragment = new LocatorFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-            } else if (position == 2) {
-                Fragment fragment = new ExpireDateFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            Fragment fragment;
+            switch (position) {
+                case 0:
+                    fragment = new InventoryFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    break;
+                case 1:
+                    fragment = new LocatorFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    break;
+                case 2:
+                    fragment = new ExpireDateFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    break;
+                case 3:
+                    fragment = new LoginFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             }
 
         }
