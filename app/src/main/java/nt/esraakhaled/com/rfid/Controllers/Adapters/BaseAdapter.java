@@ -3,6 +3,7 @@ package nt.esraakhaled.com.rfid.Controllers.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.widget.AlertDialogLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -95,7 +96,7 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseHolder> im
             holder.subTitleText.setText(items.get(position).getSubTitle());
         }
         holder.itemView.setTag(position);
-
+        holder.itemView.setBackgroundColor(Color.CYAN);
     }
 
     @Override
