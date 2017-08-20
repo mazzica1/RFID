@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RFID.iml" filepath="$PROJECT_DIR$/RFID.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rfid.iml" filepath="$PROJECT_DIR$/rfid.iml" />
     </modules>
   </component>
 </project>
