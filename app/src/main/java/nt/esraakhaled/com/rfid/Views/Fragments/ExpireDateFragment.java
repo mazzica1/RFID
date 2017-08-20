@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import nt.esraakhaled.com.rfid.Controllers.Adapters.BaseAdapter;
 import nt.esraakhaled.com.rfid.Controllers.Interfaces.UHFReaderDelegate;
 import nt.esraakhaled.com.rfid.Controllers.Sensors.UHFReader;
+import nt.esraakhaled.com.rfid.Models.BaseAdapterItem;
 import nt.esraakhaled.com.rfid.R;
 
 
@@ -29,6 +33,10 @@ public class ExpireDateFragment extends Fragment implements UHFReaderDelegate {
     private ArrayList<String> AllTags, ExpiredTag;
     private UHFReader uhfReader;
     private Calendar expireDate;
+    ArrayList<BaseAdapterItem> tags = new ArrayList<>();
+    BaseAdapter adapter;
+
+    RecyclerView recyclerView;
 
 
     public ExpireDateFragment() {
@@ -47,10 +55,23 @@ public class ExpireDateFragment extends Fragment implements UHFReaderDelegate {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.base_fragment_list, container, false);
 
         Linear_base_header = (LinearLayout) view.findViewById(R.id.headerLayout);
+
+        StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.base_list);
+        recyclerView.setLayoutManager(mStaggeredLayoutManager);
+
+
+        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.TwoLines, tags, false);
+
+        recyclerView.setAdapter(adapter);
+
+
 
 
         return view;
@@ -99,17 +120,18 @@ public class ExpireDateFragment extends Fragment implements UHFReaderDelegate {
         if (!AllTags.contains(epc)) {
             AllTags.add(epc);
             uhfReader.getEPCTagData(epc);
+
         }
     }
 
     @Override
-    public void tagEPCDataRead(String epc, String data) {
+    public void tagEPCDataRead(final String epc, String data) {
         if (data != null || !data.equals("")) {
             String year = data.substring(0, 3);
             String month = data.substring(4, 5);
             String day = data.substring(6, 7);
 
-            Calendar TagTime = Calendar.getInstance();
+            final Calendar TagTime = Calendar.getInstance();
             TagTime.set(Calendar.YEAR, Integer.parseInt(year));
             TagTime.set(Calendar.MONTH, Integer.parseInt(month));
             TagTime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
@@ -127,6 +149,11 @@ public class ExpireDateFragment extends Fragment implements UHFReaderDelegate {
             if (TagTime.getTime().compareTo(expireDate.getTime()) <= 0) {
                 if (!ExpiredTag.contains(epc)) {
                     ExpiredTag.add(epc);
+                    tags.add(new BaseAdapterItem() {{
+                        setTitle(epc);
+                        setSubTitle(dateFormatter.format(TagTime.getTime()));
+                    }});
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
