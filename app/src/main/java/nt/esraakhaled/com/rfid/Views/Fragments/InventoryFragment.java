@@ -35,7 +35,7 @@ public class InventoryFragment extends Fragment implements UHFReaderDelegate{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         tags=new ArrayList<>();
-        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.Single,tags);
+        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.Single,tags,false);
         return inflater.inflate(R.layout.base_fragment_list, container, false);
     }
 
