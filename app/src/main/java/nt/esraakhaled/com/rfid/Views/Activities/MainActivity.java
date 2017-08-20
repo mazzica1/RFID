@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import nt.esraakhaled.com.rfid.Controllers.Interfaces.IKeyDown;
 import nt.esraakhaled.com.rfid.Controllers.Sensors.UHFReader;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             if (event.getRepeatCount() == 0) {
                 UHFReader.getInstange(this).toogleReading();
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
                 if (f != null && f instanceof IKeyDown) {
                     ((IKeyDown)f).myOnKeyDwon();
                 }
