@@ -6,13 +6,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import nt.esraakhaled.com.rfid.Controllers.Interfaces.UHFReaderDelegate;
+import nt.esraakhaled.com.rfid.Controllers.Sensors.UHFReader;
 import nt.esraakhaled.com.rfid.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment     {
 
 
     public LoginFragment() {
