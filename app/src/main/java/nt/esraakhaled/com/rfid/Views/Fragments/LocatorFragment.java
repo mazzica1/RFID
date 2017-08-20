@@ -40,7 +40,7 @@ public class LocatorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         tags=new ArrayList<>();
-        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.Single,tags);
+        adapter = new BaseAdapter(getActivity(), BaseAdapter.ListItemType.Single,tags,true);
         return inflater.inflate(R.layout.base_fragment_list, container, false);
     }
 
