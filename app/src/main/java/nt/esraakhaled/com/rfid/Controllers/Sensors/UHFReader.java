@@ -99,6 +99,7 @@ public class UHFReader {
 
         new AsyncTask<String,Void,String>(){
 
+            String currentEPC = null;
             boolean needToRestartReader=false;
             @Override
             protected void onPreExecute() {
@@ -116,6 +117,7 @@ public class UHFReader {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                currentEPC = params[0];
                 String res= mReader.readData("00000000", RFIDWithUHF.BankEnum.RESERVED, 0, 4, params[0]);
                 try {
                     Thread.sleep(500);
@@ -129,7 +131,7 @@ public class UHFReader {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 for (UHFReaderDelegate listener : listeners) {
-                    listener.tagEPCDataRead(s);
+                    listener.tagEPCDataRead(currentEPC, s);
                 }
                 if(needToRestartReader) {
                     startReading();
@@ -164,7 +166,7 @@ public class UHFReader {
                     }
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(integers[0]);
                 }catch (Exception e){
 
                 }

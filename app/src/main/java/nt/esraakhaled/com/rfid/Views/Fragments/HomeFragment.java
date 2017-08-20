@@ -1,20 +1,13 @@
 package nt.esraakhaled.com.rfid.Views.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import nt.esraakhaled.com.rfid.Controllers.Adapters.HomeListAdapter;
 import nt.esraakhaled.com.rfid.R;
@@ -56,8 +49,11 @@ public class HomeFragment extends Fragment {
     HomeListAdapter.OnItemClickListener onItemClickListener = new HomeListAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
-            LocatorFragment fragment =new LocatorFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+            if (position == 2) {
+                Fragment fragment = new ExpireDateFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            }
+
         }
     };
 

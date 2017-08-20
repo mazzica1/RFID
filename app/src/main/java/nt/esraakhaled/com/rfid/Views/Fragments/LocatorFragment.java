@@ -203,7 +203,8 @@ public class LocatorFragment extends Fragment implements UHFReaderDelegate {
     }
 
     @Override
-    public void tagEPCDataRead(String data) {
+    public void tagEPCDataRead(String epc, String data) {
 
     }
+
 }

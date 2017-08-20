@@ -6,5 +6,6 @@ package nt.esraakhaled.com.rfid.Controllers.Interfaces;
 
 public interface UHFReaderDelegate {
     public void tagEPCRead(String epc);
-    public void tagEPCDataRead(String data);
+
+    public void tagEPCDataRead(String epc, String data);
 }
