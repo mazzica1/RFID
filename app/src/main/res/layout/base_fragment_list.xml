@@ -47,7 +47,7 @@
         android:src="@drawable/scan_icn"
         app:layout_anchorGravity="bottom|right|end"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/floatingActionButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
