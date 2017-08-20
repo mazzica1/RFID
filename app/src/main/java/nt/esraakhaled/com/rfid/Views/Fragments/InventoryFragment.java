@@ -93,9 +93,11 @@ public class InventoryFragment extends Fragment implements UHFReaderDelegate{
             }
         }
 
-        if (isNew){
+        if (isNew) {
             //
-            tags.add(new BaseAdapterItem(){{setTitle(epc); }});
+            tags.add(new BaseAdapterItem() {{
+                setTitle(epc);
+            }});
             adapter.notifyDataSetChanged();
         }
     }
