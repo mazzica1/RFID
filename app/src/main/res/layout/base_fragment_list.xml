@@ -44,7 +44,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         app:layout_anchor="@id/viewA"
-        android:src="@drawable/scan_icn"
+        android:src="@drawable/scan_icon"
         app:layout_anchorGravity="bottom|right|end"/>
 
     <Button
@@ -53,7 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:layout_margin="16dp"
-        android:background="@drawable/submit_btn"
+        android:background="@color/colorAccent"
+        android:text="Submit"
+        android:textColor="@android:color/white"
         android:clickable="true"
         app:borderWidth="0dp"
         app:elevation="2dp"
