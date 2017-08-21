@@ -1,7 +1,6 @@
 package nt.esraakhaled.com.rfid.Views.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -54,19 +53,23 @@ public class HomeFragment extends Fragment {
             switch (position) {
                 case 0:
                     fragment = new InventoryFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null).commit();
                     break;
                 case 1:
                     fragment = new LocatorFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null).commit();
                     break;
                 case 2:
                     fragment = new ExpireDateFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null).commit();
                     break;
                 case 3:
                     fragment = new LoginFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null).commit();
             }
 
         }
