@@ -179,7 +179,7 @@ public class UHFReader {
                 return null;
             }
         };
-        asyncTask.execute(waitTime);
+        asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,waitTime);
     }
 
     private class InitTask extends AsyncTask<String, Integer, Boolean> {

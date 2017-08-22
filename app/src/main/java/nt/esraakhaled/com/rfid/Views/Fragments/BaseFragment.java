@@ -79,7 +79,9 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, IKeyDow
                             }
                         }
                     };
-                    myAsyncTask.execute(0);
+
+                    myAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,0);
+
                     UHFReader.getInstange(null).subscribeEPCRead(BaseFragment.this);
                     UHFReader.getInstange(null).startReading();
 
