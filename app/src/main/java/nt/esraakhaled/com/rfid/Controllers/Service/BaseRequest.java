@@ -11,8 +11,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,6 +99,61 @@ public class BaseRequest {
         // Adding request to request queue
         mRequestQueue.add(stringRequest);
     }
+
+    public static <T> void doPostRequestJson(Context context, String url, final JsonObject params, final Type type, final RequestCallBack<T> requestCallBack){
+        if (mRequestQueue == null) mRequestQueue=Volley.newRequestQueue(context);
+
+        showDialog(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        if (requestCallBack!=null){
+                            try {
+
+                                requestCallBack.onSuccess((T) new Gson().fromJson(response, type));
+                            }catch(Exception e){
+                                requestCallBack.onFailure(e);
+                            }
+                        }
+                        hideDialog();
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideDialog();
+            }
+        }){
+            @Override
+            public String getBodyContentType() {
+                return String.format("application/json; charset=utf-8");
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return params== null ? null : params.toString().getBytes("utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                return null;
+
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String,String> res=new HashMap<>();
+                return res;
+            }
+        };
+
+        // Adding request to request queue
+        mRequestQueue.add(stringRequest);
+    }
+
 
     public  static <T> void doGet(Context context, String url, final Map<String, String> params,Type type, RequestCallBack<T> requestCallBack){
 

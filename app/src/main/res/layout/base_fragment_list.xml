@@ -48,7 +48,8 @@
         app:layout_anchorGravity="bottom|right|end"/>
 
     <Button
-        android:id="@+id/floatingActionButton"
+        android:visibility="gone"
+        android:id="@+id/btnSubmit"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"

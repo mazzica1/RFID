@@ -22,7 +22,7 @@ import nt.esraakhaled.com.rfid.R;
  * Created by Lenovo on 20/08/17.
  */
 
-public class BaseFragment extends Fragment implements UHFReaderDelegate, View.OnClickListener, IKeyDown {
+public class BaseFragment extends Fragment implements UHFReaderDelegate, IKeyDown {
 
     boolean isFirstClick = true;
     ArrayList<BaseAdapterItem> tags = new ArrayList<>();
@@ -42,6 +42,12 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, View.On
 
         recyclerView.setAdapter(adapter);
 
+        view.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                didClickSubmit();
+            }
+        });
 
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
 
@@ -49,6 +55,7 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, View.On
             @Override
             public void onClick(View view) {
 
+                getView().findViewById(R.id.btnSubmit).setVisibility(View.GONE);
                 if (isFirstClick) {
                     asyncTask=new AsyncTask() {
 
@@ -92,8 +99,8 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, View.On
 
             }
         });
-        final View fab = view.findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(this);
+        final View fab = view.findViewById(R.id.fab);
+
 
         fab.post(new Runnable() {
             @Override
@@ -118,17 +125,16 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, View.On
     }
 
     @Override
-    public void onClick(View view) {
-
-    }
-
-    @Override
     public void myOnKeyDwon() {
         getView().findViewById(R.id.fab).performClick();
     }
 
     protected void didFinishReading()
     {
+        getView().findViewById(R.id.btnSubmit).setVisibility(View.VISIBLE);
+    }
 
+    protected void didClickSubmit()
+    {
     }
 }
