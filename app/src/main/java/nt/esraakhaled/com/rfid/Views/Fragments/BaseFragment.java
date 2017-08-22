@@ -51,16 +51,16 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, IKeyDow
 
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
 
-            AsyncTask asyncTask=null;
+            AsyncTask<Integer,Void,Integer> myAsyncTask=null;
             @Override
             public void onClick(View view) {
 
                 getView().findViewById(R.id.btnSubmit).setVisibility(View.GONE);
                 if (isFirstClick) {
-                    asyncTask=new AsyncTask() {
+                    myAsyncTask=new AsyncTask<Integer, Void, Integer>() {
 
                         @Override
-                        protected Object doInBackground(Object[] objects) {
+                        protected Integer doInBackground(Integer... integers) {
                             lastRead = System.currentTimeMillis();
                             while (!isCancelled() && (System.currentTimeMillis() - lastRead ) < 10000) try {
                                 Thread.sleep(100);
@@ -71,15 +71,15 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, IKeyDow
                         }
 
                         @Override
-                        protected void onPostExecute(Object o) {
-                            super.onPostExecute(o);
+                        protected void onPostExecute(Integer integer) {
+                            super.onPostExecute(integer);
                             if(!isCancelled()){
                                 getView().findViewById(R.id.fab).performClick();
                                 didFinishReading();
                             }
                         }
                     };
-                    asyncTask.execute();
+                    myAsyncTask.execute(0);
                     UHFReader.getInstange(null).subscribeEPCRead(BaseFragment.this);
                     UHFReader.getInstange(null).startReading();
 
@@ -87,7 +87,7 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, IKeyDow
                     ((FloatingActionButton) view).setImageResource(R.drawable.stop);
 
                 } else {
-                    asyncTask.cancel(false);
+                    myAsyncTask.cancel(false);
                     UHFReader.getInstange(null).stopReading();
                     UHFReader.getInstange(null).unSubscribeEPCRead(BaseFragment.this);
                     view.setTag("stop");
@@ -113,6 +113,7 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate, IKeyDow
 
     @Override
     public void tagEPCRead(String epc) {
+
         if (!allTags.contains(epc)) {
             allTags.add(epc);
             lastRead = System.currentTimeMillis();

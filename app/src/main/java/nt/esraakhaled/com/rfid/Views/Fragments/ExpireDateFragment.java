@@ -30,7 +30,7 @@ public class ExpireDateFragment extends BaseFragment{
     private TextView txt_date;
     private DatePickerDialog fromDatePickerDialog;
     private SimpleDateFormat dateFormatter;
-    private ArrayList<String> AllTags, ExpiredTag;
+    private ArrayList<String> ExpiredTag;
     private Calendar expireDate;
 
     public ExpireDateFragment() {
@@ -41,7 +41,6 @@ public class ExpireDateFragment extends BaseFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AllTags = new ArrayList<>();
         ExpiredTag = new ArrayList<>();
     }
 
@@ -98,11 +97,10 @@ public class ExpireDateFragment extends BaseFragment{
 
     @Override
     public void tagEPCRead(String epc) {
-        if (!AllTags.contains(epc)) {
-            AllTags.add(epc);
+        if (!allTags.contains(epc)) {
             UHFReader.getInstange(null).getEPCTagData(epc);
-
         }
+        super.tagEPCRead(epc);
     }
 
     @Override
