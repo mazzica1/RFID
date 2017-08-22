@@ -43,6 +43,7 @@ public class InventoryFragment extends BaseFragment {
     }
     @Override
     public void tagEPCRead(final String epc) {
+        super.tagEPCRead(epc);
 
         boolean isNew=true;
         for(BaseAdapterItem item:tags){

@@ -1,5 +1,6 @@
 package nt.esraakhaled.com.rfid.Views.Fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,13 +22,15 @@ import nt.esraakhaled.com.rfid.R;
  * Created by Lenovo on 20/08/17.
  */
 
-public class BaseFragment extends Fragment implements UHFReaderDelegate , View.OnClickListener , IKeyDown{
+public class BaseFragment extends Fragment implements UHFReaderDelegate, View.OnClickListener, IKeyDown {
 
-    boolean isFirstClick=true;
+    boolean isFirstClick = true;
+    ArrayList<BaseAdapterItem> tags = new ArrayList<>();
+    ArrayList<String> allTags = new ArrayList<>();
 
-    ArrayList<BaseAdapterItem> tags=new ArrayList<>();;
     BaseAdapter adapter;
     RecyclerView recyclerView;
+    long lastRead=-1;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -41,9 +44,35 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
 
 
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+
+            AsyncTask asyncTask=null;
             @Override
             public void onClick(View view) {
+
                 if (isFirstClick) {
+                    asyncTask=new AsyncTask() {
+
+                        @Override
+                        protected Object doInBackground(Object[] objects) {
+                            lastRead = System.currentTimeMillis();
+                            while (!isCancelled() && (System.currentTimeMillis() - lastRead ) < 10000) try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+                            if(!isCancelled()){
+                                getView().findViewById(R.id.fab).performClick();
+                                didFinishReading();
+                            }
+                        }
+                    };
+                    asyncTask.execute();
                     UHFReader.getInstange(null).subscribeEPCRead(BaseFragment.this);
                     UHFReader.getInstange(null).startReading();
 
@@ -51,6 +80,7 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
                     ((FloatingActionButton) view).setImageResource(R.drawable.stop);
 
                 } else {
+                    asyncTask.cancel(false);
                     UHFReader.getInstange(null).stopReading();
                     UHFReader.getInstange(null).unSubscribeEPCRead(BaseFragment.this);
                     view.setTag("stop");
@@ -62,7 +92,7 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
 
             }
         });
-        final View fab= view.findViewById(R.id.floatingActionButton);
+        final View fab = view.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(this);
 
         fab.post(new Runnable() {
@@ -76,7 +106,10 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
 
     @Override
     public void tagEPCRead(String epc) {
-
+        if (!allTags.contains(epc)) {
+            allTags.add(epc);
+            lastRead = System.currentTimeMillis();
+        }
     }
 
     @Override
@@ -92,5 +125,10 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
     @Override
     public void myOnKeyDwon() {
         getView().findViewById(R.id.fab).performClick();
+    }
+
+    protected void didFinishReading()
+    {
+
     }
 }

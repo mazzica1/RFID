@@ -107,6 +107,7 @@ public class ExpireDateFragment extends BaseFragment{
 
     @Override
     public void tagEPCDataRead(final String epc, String data) {
+        super.tagEPCRead(epc);
         if (data != null && !data.equals("")) {
             String year = data.substring(0, 4);
             String month = data.substring(4, 6);

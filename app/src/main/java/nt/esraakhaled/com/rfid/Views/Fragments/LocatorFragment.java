@@ -98,6 +98,7 @@ public class LocatorFragment extends BaseFragment {
 
     @Override
     public void tagEPCRead(String epc) {
+        super.tagEPCRead(epc);
         for (int i = 0; i < tags.size(); i++) {
             if (epc.equalsIgnoreCase(tags.get(i).getTitle())) {
                 tags.get(i).setFlag(true);
