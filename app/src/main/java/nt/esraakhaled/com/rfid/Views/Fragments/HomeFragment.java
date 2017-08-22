@@ -3,6 +3,7 @@ package nt.esraakhaled.com.rfid.Views.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import nt.esraakhaled.com.rfid.Controllers.Adapters.HomeListAdapter;
 import nt.esraakhaled.com.rfid.R;
+import nt.esraakhaled.com.rfid.Views.Activities.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +52,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onItemClick(View v, int position) {
             Fragment fragment;
+
+            ((MainActivity)getActivity()).showBackButton(position!=3);
             switch (position) {
                 case 0:
                     fragment = new InventoryFragment();
@@ -69,7 +73,7 @@ public class HomeFragment extends Fragment {
                 case 3:
                     fragment = new LoginFragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment)
-                            .addToBackStack(null).commit();
+                            .commit();
             }
 
         }

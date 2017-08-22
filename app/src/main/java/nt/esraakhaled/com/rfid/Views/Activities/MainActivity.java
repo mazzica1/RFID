@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.View;
 
 import nt.esraakhaled.com.rfid.Controllers.Interfaces.IKeyDown;
 import nt.esraakhaled.com.rfid.Controllers.Sensors.UHFReader;
@@ -15,11 +17,23 @@ import nt.esraakhaled.com.rfid.Views.Fragments.LoginFragment;
 public class MainActivity extends AppCompatActivity {
 
 
+    Toolbar mToolbar=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // toolbar
+        mToolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment())
@@ -29,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        int count = getFragmentManager().getBackStackEntryCount();
+        int count = getSupportFragmentManager().getBackStackEntryCount();
 
         if (count == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -56,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+
+        showBackButton(count>1);
     }
 
 
@@ -87,5 +103,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         UHFReader.getInstange(this).closing();
+    }
+
+    public void showBackButton(boolean show){
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+        if (show){
+           mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MainActivity.this.onBackPressed();
+                }
+            });
+        }
     }
 }

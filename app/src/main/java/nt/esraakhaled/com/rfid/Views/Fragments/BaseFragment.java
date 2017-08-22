@@ -11,6 +11,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import nt.esraakhaled.com.rfid.Controllers.Adapters.BaseAdapter;
+import nt.esraakhaled.com.rfid.Controllers.Interfaces.IKeyDown;
 import nt.esraakhaled.com.rfid.Controllers.Interfaces.UHFReaderDelegate;
 import nt.esraakhaled.com.rfid.Controllers.Sensors.UHFReader;
 import nt.esraakhaled.com.rfid.Models.BaseAdapterItem;
@@ -20,7 +21,7 @@ import nt.esraakhaled.com.rfid.R;
  * Created by Lenovo on 20/08/17.
  */
 
-public class BaseFragment extends Fragment implements UHFReaderDelegate , View.OnClickListener{
+public class BaseFragment extends Fragment implements UHFReaderDelegate , View.OnClickListener , IKeyDown{
 
     boolean isFirstClick=true;
 
@@ -61,7 +62,15 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
 
             }
         });
-        view.findViewById(R.id.floatingActionButton).setOnClickListener(this);
+        final View fab= view.findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(this);
+
+        fab.post(new Runnable() {
+            @Override
+            public void run() {
+                fab.requestLayout();
+            }
+        });
 
     }
 
@@ -78,5 +87,10 @@ public class BaseFragment extends Fragment implements UHFReaderDelegate , View.O
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void myOnKeyDwon() {
+        getView().findViewById(R.id.fab).performClick();
     }
 }

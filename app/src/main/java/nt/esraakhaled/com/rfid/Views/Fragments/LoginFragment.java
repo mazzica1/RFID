@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment     {
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment())
-                        .addToBackStack(null).commit();
+                        .commit();
             }
         });
         return  v;
